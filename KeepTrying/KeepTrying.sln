@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MineCampTurtle", "MineCampTurtle\MineCampTurtle.csproj", "{687EBE3A-2B88-43EE-A6B4-EB20849488F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafestPlaceCubeWithBoms", "SafestPlaceCubeWithBoms\SafestPlaceCubeWithBoms.csproj", "{3DE5793C-D057-4ED7-9BE6-FE49E2ED46E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafestPlaceCubeWithBombs", "SafestPlaceCubeWithBoms\SafestPlaceCubeWithBombs.csproj", "{3DE5793C-D057-4ED7-9BE6-FE49E2ED46E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
