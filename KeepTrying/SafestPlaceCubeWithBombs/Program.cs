@@ -129,8 +129,6 @@ namespace SafestPlaceCubeWithBombs
         static int ProcessTest(List<CubePosition> bombs)
         {
             int safestSquareRoot = 0;
-            CubePosition safestPlace = new CubePosition();
-
             // Basic algorithm - each x = x1, y = y1 defines a line of CubeSize points for each Z
             // Project each bomb with current best radius onto this line to find
             //  section where the sphere around each bomb intersects
@@ -151,12 +149,8 @@ namespace SafestPlaceCubeWithBombs
                         CubePosition p = new CubePosition { X = x, Y = y, Z = z };
 
                         int newSqrtValue = bombs.Select(b => b.DistToSqrd(p)).Min();
-                        
-                        if (newSqrtValue > safestSquareRoot)
-                        {
-                            safestSquareRoot = newSqrtValue;
-                            safestPlace = p;
-                        }
+
+                        safestSquareRoot = Math.Max(newSqrtValue, safestSquareRoot);
                     }
                 }
             }

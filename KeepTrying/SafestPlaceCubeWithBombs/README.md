@@ -17,6 +17,8 @@ All bombs coordinates will be in [0, 1000], both inclusive.
 
 Found test cases into: https://www.facebook.com/hackercup/problem/164535313595986/
 java solution: https://github.com/mlbright/bombshelter/blob/master/SafestPlace.java
+c# solution: https://github.com/owen-griffiths/Experiments/blob/master/SpaceCube/SpaceCube/Program.cs
+
 ----------------------------------------------------
 5
 5
