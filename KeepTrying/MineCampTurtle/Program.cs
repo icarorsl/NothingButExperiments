@@ -195,27 +195,32 @@ namespace MineCampTurtle
                                 break;
                             }
                             else
-                            {
-                                _actions[i] = action + ": Successful move!";
-                            }
-
-                            if (_currentPosition.X == _exitPosition.X && _currentPosition.Y == _exitPosition.Y)
-                            {
-                                _actions[i] = action + ": Exit Position found!";
-                                break;
-                            }
+                                if (_currentPosition.X == _exitPosition.X && _currentPosition.Y == _exitPosition.Y)
+                                {
+                                    _actions[i] = action + ": Exit Position found!";
+                                    break;
+                                }
+                                else
+                                    if (i == _actions.Length - 1)
+                                    {
+                                        _actions[i] = action + ": Still in Danger!";
+                                    }
+                                    else
+                                    {
+                                        _actions[i] = action + ": Successful move!";
+                                    }
                         }
                         else
                         {
-                            _actions[i] = action + ": Incorrect move. Still in danger!";
+                            _actions[i] = action + ": Incorrect move!";
                         }
                     }
                     else
                         if (_actions[i].StartsWith("r", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Rotate();
-                        _actions[i] = action + ": Successfull move!";
-                    }
+                        {
+                            Rotate();
+                            _actions[i] = action + ": Successfull move!";
+                        }
                 }
             }
 

@@ -46,7 +46,7 @@ namespace SafestPlaceCubeWithBombs
         /// <summary>
         /// inclusive cube size
         /// </summary>
-        private const int CubeSize = 1001;
+        private const int SymetricCubeSize = 1001;
 
         /// <summary>
         /// Check the exclusions and return the valid out of the intersections
@@ -67,7 +67,7 @@ namespace SafestPlaceCubeWithBombs
                 }
             }
 
-            for (int result = next; result < CubeSize; result++)
+            for (int result = next; result < SymetricCubeSize; result++)
                 yield return result;
         }
 
@@ -99,7 +99,7 @@ namespace SafestPlaceCubeWithBombs
                     // The intersection of a bomb is symetric around its Z
                     // Also, each bomb has Z >= all previous ones
                     // Thus, if the Begin of the range is less than a previous Begin, the new range totally superceeds the previous range, 
-                    //  and the previous range can be removed
+                    // and the previous range can be removed
                     for (int iExisting = result.Count - 1; iExisting >= 0; iExisting--)
                     {
                         if (newRange.Begin <= result[iExisting].Begin)
@@ -129,27 +129,25 @@ namespace SafestPlaceCubeWithBombs
         static int ProcessTest(List<CubePosition> bombs)
         {
             int safestSquareRoot = 0;
-            // Basic algorithm - each x = x1, y = y1 defines a line of CubeSize points for each Z
-            // Project each bomb with current best radius onto this line to find
-            //  section where the sphere around each bomb intersects
-            // Then, only need to check Z values not in these intersections
-
             List<CubePosition> zBombs = bombs.OrderBy(b => b.Z).ToList();
 
-            //reading the inclusive cube, each x, y
-            //Simulate the position the bombs and test/find the safestplace           
-            for (int x = 0; x < CubeSize; x++)
+            //reading the inclusive cube - each x, y into the inclusive cube
+            //Simulate the positions of the bombs and test/find where are the intersections and bring the Zs out of these intersections
+            for (int x = 0; x < SymetricCubeSize; x++)
             {
-                for (int y = 0; y < CubeSize; y++)
+                for (int y = 0; y < SymetricCubeSize; y++)
                 {
+                    //now we have to go through Z, simulate the bombs positions and calculate the best radius
                     List<Range> exclusions = SimulateBombPositionsAndTest(x, y, zBombs, safestSquareRoot);
 
                     foreach (int z in PossibleValues(exclusions))
                     {
                         CubePosition p = new CubePosition { X = x, Y = y, Z = z };
 
+                        //getting the closest bomb
                         int newSqrtValue = bombs.Select(b => b.DistToSqrd(p)).Min();
 
+                        //getting the best radius
                         safestSquareRoot = Math.Max(newSqrtValue, safestSquareRoot);
                     }
                 }
@@ -188,11 +186,15 @@ namespace SafestPlaceCubeWithBombs
                 tests.Add(bombs);
             }
 
-            //calculating and printing the results
+            //testing and printing the results
             for (int i = 0; i < tests.Count(); i++)
             {
-                int safestPlace = ProcessTest(tests[i]);
-                Console.WriteLine("TestCase #{0}: {1}", i+1, safestPlace);
+                int value = i;
+                Task.Run(() => 
+                {                    
+                    int safestPlace = ProcessTest(tests[value]);
+                    Console.WriteLine("TestCase #{0}: {1}", value + 1, safestPlace);
+                });
             }
 
             Console.Read();
