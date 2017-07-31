@@ -19,8 +19,3 @@ Conditions:
  The algorithm should be able to handle large input lengths, of a couple of thousand values, but the input
 will never be large enough to cause a stack overflow.
 Solve with a recursive method.
-
-FOUND THESE REFERENCES
-http://ebanshi.cc/questions/5005227/asp-net-addition-of-two-byte-arrays
-
-https://stackoverflow.com/questions/31844188/interview-test-adding-using-a-recursive-algorithm-c-sharp
