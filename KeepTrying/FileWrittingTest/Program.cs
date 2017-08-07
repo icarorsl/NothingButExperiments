@@ -30,10 +30,10 @@ namespace FileWrittingTest
 
             while (true)
             {
-                Console.Write("What do you want to do? (E=Exit, S=Show records, A=Add records, U=Update a record)?: ");
+                Console.Write("What do you want to do? (E=Exit, S=Show records, A=Add records, V=View a record, U=Update a record)?: ");
                 string value = Console.ReadLine();
 
-                if (value.Equals("U", StringComparison.OrdinalIgnoreCase))
+                if (value.Equals("U", StringComparison.OrdinalIgnoreCase) || value.Equals("V", StringComparison.OrdinalIgnoreCase))
                 {
                     while (true)
                     {
@@ -41,15 +41,19 @@ namespace FileWrittingTest
                         while (true)
                         {
                             Console.Write("Type the ID: ");
-                            value = Console.ReadLine();
-                            if (int.TryParse(value, out peopleID))
+                            string valueID = Console.ReadLine();
+                            if (int.TryParse(valueID, out peopleID))
                                 break;
                         }
 
                         People people = entityPerson.Find(p => p.ID == peopleID);
+
                         if (people != null)
                         {
-                            CollectPersonDetails(people, null);
+                            if (value.Equals("V", StringComparison.OrdinalIgnoreCase))
+                                DisplayRecord(people);
+                            else
+                                CollectPersonDetails(people, null);
                             break;
                         }
                     }
@@ -91,9 +95,9 @@ namespace FileWrittingTest
 
         static void InjectPeople()
         {
-            Console.WriteLine("Injecting 1000000 records...");
+            Console.WriteLine("Injecting 100000 records...");
             var entityPerson = AppController.Get<IEntityPeople>();
-            for (var i = 0; i < 1000000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 var obj = entityPerson.New();
                 obj.FirstName = string.Format("name{0}", i);
@@ -108,7 +112,7 @@ namespace FileWrittingTest
                 entityPerson.Update(obj);
             }
 
-            Console.WriteLine("Commiting 1000000 records...");
+            Console.WriteLine("Commiting 100000 records...");
             entityPerson.Commit();
         }
 
