@@ -14,6 +14,10 @@ namespace FileWrittingTest
 {
     class Program
     {
+        /// <summary>
+        /// Main method
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Console.WriteLine("File Writing Test. Initializing...");
@@ -93,29 +97,12 @@ namespace FileWrittingTest
             }
         }
 
-        static void InjectPeople()
-        {
-            Console.WriteLine("Injecting 100000 records...");
-            var entityPerson = AppController.Get<IEntityPeople>();
-            for (var i = 0; i < 100000; i++)
-            {
-                var obj = entityPerson.New();
-                obj.FirstName = string.Format("name{0}", i);
-                obj.Surname = string.Format("surname{0}", i);
-
-                DateTime dt;
-                if (DateTime.TryParseExact("01012000", new string[] { "ddMMyyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
-                {
-                    obj.DateOfBirth = dt;
-                }
-                obj.AllowRegistration = true;
-                entityPerson.Update(obj);
-            }
-
-            Console.WriteLine("Commiting 100000 records...");
-            entityPerson.Commit();
-        }
-
+        /// <summary>
+        /// Collect the details of the person
+        /// </summary>
+        /// <param name="people"></param>
+        /// <param name="partner"></param>
+        /// <returns></returns>
         static People CollectPersonDetails(People people, People partner)
         {
             var entityPerson = AppController.Get<IEntityPeople>();
@@ -279,6 +266,10 @@ namespace FileWrittingTest
             return people;
         }
 
+        /// <summary>
+        /// display the person on screen
+        /// </summary>
+        /// <param name="person"></param>
         static void DisplayRecord(People person)
         {
             Console.WriteLine("------------------------------------------------------------------------------------");
@@ -291,6 +282,11 @@ namespace FileWrittingTest
                 Console.WriteLine(string.Format("Parter: {0}-{1}", person.Partner.ID, person.Partner.FullName));
         }
 
+        /// <summary>
+        /// Collect Yes or No fom the user 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         static bool CollectYesNo(string message)
         {
             while (true)
@@ -301,5 +297,32 @@ namespace FileWrittingTest
                 if (value.Equals("N", StringComparison.OrdinalIgnoreCase)) return false;
             }
         }
+
+        /// <summary>
+        /// test performance
+        /// </summary>
+        static void InjectPeople()
+        {
+            Console.WriteLine("Injecting 100000 records...");
+            var entityPerson = AppController.Get<IEntityPeople>();
+            for (var i = 0; i < 100000; i++)
+            {
+                var obj = entityPerson.New();
+                obj.FirstName = string.Format("name{0}", i);
+                obj.Surname = string.Format("surname{0}", i);
+
+                DateTime dt;
+                if (DateTime.TryParseExact("01012000", new string[] { "ddMMyyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+                {
+                    obj.DateOfBirth = dt;
+                }
+                obj.AllowRegistration = true;
+                entityPerson.Update(obj);
+            }
+
+            Console.WriteLine("Commiting 100000 records...");
+            entityPerson.Commit();
+        }
+
     }
 }
